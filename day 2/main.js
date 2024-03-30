@@ -23,18 +23,31 @@ document.getElementById('btn-add-menu').addEventListener('click', function() {
 	// Add new menu to array
 	menus.push(newMenu)
 
+	render()
+
+
+})
+
+function render() {
 	// Reset list
 	ulElement.innerHTML = ''
 
 	// Create Element List
-	menus.forEach((menu) => {
+	menus.forEach((menu, index) => {
 		const foodElement = document.createElement('li')
 		foodElement.innerText = menu
+		foodElement.id = index
+
+		const btnDelete = document.createElement('button')
+		btnDelete.innerText = 'X'
+
+		btnDelete.addEventListener('click', () => {
+			foodElement.remove()
+			menus.splice(foodElement.id, 1)
+			render()
+		})
+
+		foodElement.appendChild(btnDelete)
 		ulElement.appendChild(foodElement)
 	})
-
-})
-
-// Delete Element menggunakan DOM
-const menu1 = document.getElementById('menu-0')
-menu1.remove()
+}
